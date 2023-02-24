@@ -5,19 +5,16 @@ import { readFileSync } from 'fs';
 @Injectable()
 export class AppService {
   getHello(): string {
-    // parse incoming XML data
+    // Load XSD and mock saml files...
     const samlInput = readFileSync('./mock-saml.xml', 'utf-8');
     const samlSchemaInput = readFileSync('./schema.xsd', 'utf-8');
 
     // parse incoming XML data
     const xmlDoc = parseXml(samlInput);
-
     const samlSchema = parseXml(samlSchemaInput);
 
     // validate XML data against schema
     const validationResult = xmlDoc.validate(samlSchema);
-
-    //console.log(validationResult);
 
     if (validationResult === true) {
       console.log('Validation successful');
