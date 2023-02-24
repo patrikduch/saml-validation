@@ -1,0 +1,46 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="urn:oasis:names:tc:SAML:2.0:metadata"
+           xmlns="urn:oasis:names:tc:SAML:2.0:metadata"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified">
+
+    <xs:import namespace="http://www.w3.org/2000/09/xmldsig#"
+               schemaLocation="xmldsig-core-schema.xsd"/>
+
+    <xs:complexType name="SPSSODescriptorType">
+        <xs:complexContent>
+            <xs:extension base="EntityDescriptorType">
+                <xs:sequence>
+                    <xs:element name="AssertionConsumerService" minOccurs="1" maxOccurs="unbounded">
+                        <xs:complexType>
+                            <xs:attribute name="Binding" type="xs:anyURI" use="required"/>
+                            <xs:attribute name="Location" type="xs:anyURI" use="required"/>
+                            <xs:attribute name="index" type="xs:integer" use="optional"/>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="AuthnRequestsSigned" type="xs:boolean" use="optional"/>
+                <xs:attribute name="WantAssertionsSigned" type="xs:boolean" use="optional"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="EntityDescriptorType">
+        <xs:choice minOccurs="1" maxOccurs="unbounded">
+            <xs:element name="SPSSODescriptor" type="SPSSODescriptorType"/>
+            <xs:element name="AssertionConsumerService">
+                <xs:complexType>
+                    <xs:attribute name="Binding" type="xs:anyURI" use="required"/>
+                    <xs:attribute name="Location" type="xs:anyURI" use="required"/>
+                    <xs:attribute name="index" type="xs:integer" use="optional"/>
+                </xs:complexType>
+            </xs:element>
+        </xs:choice>
+        <xs:attribute name="entityID" type="xs:anyURI" use="required"/>
+        <xs:attribute name="ID" type="xs:ID" use="optional"/>
+        <xs:attribute name="validUntil" type="xs:dateTime" use="optional"/>
+    </xs:complexType>
+
+    <xs:element name="EntityDescriptor" type="EntityDescriptorType"/>
+
+</xs:schema>
